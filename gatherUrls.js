@@ -9,9 +9,10 @@ const puppeteer = require('puppeteer')
 // TODO make the button clicks a for loop
 
 let scrape = async () => {
-let child = 6
-const browser = await puppeteer.launch({headless: false,
-  executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
+const browser = await puppeteer.launch({
+  headless: false,
+  executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+});
 const page = await browser.newPage();
 await page.setViewport({
   width: 1920,
@@ -19,44 +20,31 @@ await page.setViewport({
 })
 await page.goto(url);
 
-    
-    await page.click(`#block-system-main > div > div:nth-child(6) > ul > li > a`)
-    await page.waitFor(3000)
-    await console.log('waited for 3 seconds')
+await clickButton(page)
    
-    //2nd time 
-
-    await page.click(`#block-system-main > div > div:nth-child(7) > ul > li > a`)
-    await page.waitFor(3000)
-    await console.log('waited for 3 seconds')
-    await console.log('2nd click')
-    
-   
-    //3rd time
-
-    await page.click(`#block-system-main > div > div:nth-child(8) > ul > li > a`)
-    await console.log('3rd click')
-    await page.waitFor(3000)
-    await console.log('waited for 3 seconds')
-    
-
-   
-   
-
-
 await console.log('loaded urls now to gather')
 
 let bodyHTML = await page.evaluate(() => document.body.innerHTML);
 
 await gatherUrls(bodyHTML)
 
-
-
-// await browser.close();
+await browser.close();
 };
 
 
+async function clickButton (pageUrl) {
+  let clickCount = 0
+  for (let nodeChild = 6; clickCount < 17; clickCount++) {
 
+    await pageUrl.click(`#block-system-main > div > div:nth-child(${nodeChild}) > ul > li > a`)
+    await pageUrl.waitFor(3000)
+    await nodeChild++
+    await console.log('waited for 2 seconds')
+    await console.log('click number', clickCount)
+
+  }
+  // return clickCount
+}
 
 
 scrape()
@@ -82,5 +70,5 @@ function gatherUrls (html) {
     episodeUrls.push($('article > header > a', html)[i].attribs.href);
   }
 
-  console.log(episodeUrls)
+  console.dir(episodeUrls, {'maxArrayLength': null})
 }
