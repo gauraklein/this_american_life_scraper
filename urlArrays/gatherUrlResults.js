@@ -1,4 +1,5 @@
-[ '/685/we-come-from-small-places',
+
+let allUrls = [ '/685/we-come-from-small-places',
   '/581/anatomy-of-doubt',
   '/684/burn-it-down',
   '/683/beer-summit',
@@ -854,3 +855,8 @@
   '/3/poultry-slam-1995',
   '/2/small-scale-sin',
   '/1/new-beginnings' ]
+
+
+  module.exports.arr = {
+    allUrls
+  }
