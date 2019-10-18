@@ -23846,3 +23846,8 @@ let allEpisodeData = [
     ]
   }
 ];
+
+
+module.exports = {
+  allEpisodeData: allEpisodeData
+}
