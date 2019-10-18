@@ -1,4 +1,4 @@
-const allURLS = require('./urlResults.js')
+const allURLS = require('./urlArrays/gatherUrlResults.js/index.js.js')
 
 let filteredURLS = []
 
