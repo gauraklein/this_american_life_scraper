@@ -44,7 +44,7 @@ visitUrlsAndScrape()
 
 async function visitUrlLoop (page) {
 
-    for (let urlToScrape = 0; urlToScrape < 5; urlToScrape++) {
+    for (let urlToScrape = 0; urlToScrape < filteredUrlArray.length; urlToScrape++) {
         const episodeUrl = filteredUrlArray[urlToScrape];
         const pageLoadFull = page.waitForNavigation({ waitUntil: 'networkidle2' });
         await page.goto('https://www.thisamericanlife.org' + episodeUrl);
