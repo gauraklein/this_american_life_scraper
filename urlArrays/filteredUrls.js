@@ -690,6 +690,6 @@ let filteredUrlArray = [ '/685/we-come-from-small-places',
   '/2/small-scale-sin',
   '/1/new-beginnings' ]
 
-  module.exports.arr = {
-    filteredUrlArray
+  module.exports = {
+    filteredUrlArray: filteredUrlArray
   }
