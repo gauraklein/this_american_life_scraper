@@ -120,3 +120,10 @@ function findNumberOfActs (HTML) {
 
     return actsArray
 }
+
+module.exports = {
+
+    gatherEpisodeData: gatherEpisodeData,
+    findNumberOfActs: findNumberOfActs
+
+}

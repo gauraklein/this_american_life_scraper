@@ -1,15 +1,17 @@
 const $ = require('cheerio')
-const url = 'https://www.thisamericanlife.org/archive';
+// const url = 'https://www.thisamericanlife.org/archive';
 const puppeteer = require('puppeteer')
 const allEpisodeData = require('./../allEpisodeData')
-
+const allEpisodeInfoArray = allEpisodeData.allEpisodeData
 const url = 'https://www.thisamericanlife.org/'
+
+
 
 async function getLatestEpisodeAndPushResults () {
 
     //browser launch
     const browser = await puppeteer.launch({
-        headless: false,
+        
         executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
     });
 
@@ -17,11 +19,13 @@ async function getLatestEpisodeAndPushResults () {
 
     const page = await browser.newPage();
 
-    await clickEpisode(page)
+    await clickNewestEpisode(page)
 
-    await gatherEpisodeData()
+    await page.waitForNavigation({ waitUntil: 'networkidle2' });
 
-    await pushEpisodeData()
+    let pageHTML = await page.evaluate(() => document.body.innerHTML);
+
+    await gatherEpisodeData(pageHTML)
 
     await console.log('data added')
 
@@ -29,22 +33,85 @@ async function getLatestEpisodeAndPushResults () {
 
 } 
 
+
+
 // functions
 
-function clickEpisode(page) {
+async function clickNewestEpisode(page) {
+    console.log('function ran')
+    await page.goto(url);
+
+    await page.click('#block-system-main > div > article > article > div > header > h2 > a')
 
     //this will go to homepage and click on first episode
 
 }
 
-function gatherEpisodeData(pagehtml) {
-    
-    //this will scrape the data from episode page
+function gatherEpisodeData (HTML) {
 
+    //html selectors
+
+    let episodeNumber = $('#block-system-main > div > article > header > div > div.meta > div.field.field-name-field-episode-number.field-type-number-integer.field-label-hidden > div > div', HTML).text()
+    let episodeTitle = $('#block-system-main > div > article > header > div > div.episode-title > h1', HTML).text()
+    let episodeDescription = $('#block-system-main > div > article > header > div > div.field.field-name-body.field-type-text-with-summary.field-label-hidden > div > div > p', HTML).text()
+    let episodeDate = $('#block-system-main > div > article > header > div > div.meta > div.field.field-name-field-radio-air-date.field-type-date.field-label-hidden > div > div > span', HTML).text()
+    let imageUrl = $('#block-system-main > div > article > figure > img', HTML).attr('src')
+    let actsArray = findNumberOfActs(HTML)
+
+    //episode object that will be pushed to final array
+
+    let episodeObject = {
+
+        number: episodeNumber,
+        title: episodeTitle,
+        description: episodeDescription,
+        date: episodeDate,
+        image: imageUrl,
+        acts: actsArray
+    }
+    // console.log('this is the episode object', episodeObject)
+    console.log('XXXXXXXXXXXXXXX')
+    allEpisodeInfoArray.unshift(episodeObject)
+    console.log('this is the first item in the all episode info', allEpisodeData.allEpisodeData[0])
+    // allEpisodeInfoArray.push(episodeObject)
 }
 
-function pushEpisodeData(episodeObject) {
+//function that goes through the acts and creates act objects that are pushed to acts array
 
-    //this will push the object into the all episode array
+function findNumberOfActs (HTML) {
 
+    // array that will be returned
+
+    let actsArray = []
+
+    // number of acts, dictates how many times the for loop will run
+
+    let actSectionLength = $('#block-system-main > div > article > div > div.field.field-name-field-acts.field-type-entityreference.field-label-hidden > div', HTML).children().length
+    let nodeCount = 1
+
+    //FOR LOOP TO GO THROUGH EACH ACT
+
+    for (let actToScrape = 0; actToScrape < actSectionLength; actToScrape++) {
+    //variables 
+    let actTitle = $(`#block-system-main > div > article > div > div.field.field-name-field-acts.field-type-entityreference.field-label-hidden > div > div:nth-child(${nodeCount}) > article > div > h2 > a`, HTML).text()
+    let actProducers = $(`#block-system-main > div > article > div > div.field.field-name-field-acts.field-type-entityreference.field-label-hidden > div > div:nth-child(${nodeCount}) > article > div > div.field.field-name-field-contributor.field-type-entityreference.field-label-above > div > div.field-item.even > a`, HTML).text()
+    let actDescription = $(`#block-system-main > div > article > div > div.field.field-name-field-acts.field-type-entityreference.field-label-hidden > div > div:nth-child(${nodeCount}) > article > div > div.field.field-name-body.field-type-text-with-summary.field-label-hidden > div > div > p`, HTML).text()
+    let actSong = $(`#block-system-main > div > article > div > div > div > div:nth-child(${nodeCount}) > article > div > div.field-collection-container.clearfix > div > div > div`, HTML).text()
+    console.log('this is the act', actTitle)
+
+        let actObject = {
+            title: actTitle,
+            producers: actProducers,
+            description: actDescription,
+            song: actSong
+        }
+
+        actsArray.push(actObject)
+        nodeCount++
+    }
+
+    return actsArray
 }
+
+
+getLatestEpisodeAndPushResults();
