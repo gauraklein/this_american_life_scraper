@@ -1,5 +1,64 @@
 let allEpisodeData = [
   {
+    number: "686",
+    title: "Umbrellas Up",
+    description:
+      "For over 100 days now, protesters in Hong Kong have taken to the streets every weekend. What itΓÇÖs like to live through that.",
+    date: "October 18, 2019",
+    image:
+      "https://hw3.thisamericanlife.org/sites/default/files/styles/landscape/public/episodes/images/yu_show_image_ig.jpg?itok=o-wi_Y1w",
+    acts: [
+      {
+        title: "Prologue",
+        producers: "Ira Glass",
+        description:
+          "Katherine has been going to protest in Hong Kong for over 4 months. SheΓÇÖs got packing her bag for┬áa protest down to a science. She shows host Ira Glass and producer Emanuele Berry what's inside. (7 minutes)",
+        song: ""
+      },
+      {
+        title: "The Cursed Generation",
+        producers: "Ira Glass",
+        description:
+          "A bunch of 22-year-olds from Hong Kong explain why they are cursed and what that means for their and Hong Kong's future. (17 minutes)",
+        song: ""
+      },
+      {
+        title: "The Fight",
+        producers: "Ira Glass",
+        description:
+          "Katherine, Ira and Emanuele go to a protest and get tear gassed in front of a Ruth's Chris Steakhouse. (6 minutes)",
+        song: ""
+      },
+      {
+        title: "Uncivil Disobedience",
+        producers: "Emanuele Berry",
+        description:
+          "Producer Emanuele Berry has a day at the mall unlike any other. (7 minutes)",
+        song: ""
+      },
+      {
+        title: "Good Cop, Dad Cop",
+        producers: "Alan Yu",
+        description:
+          "Alan Yu talks to a┬áprotestor who thinks the Hong Kong police are terrible has a chat with his dad ΓÇö┬áa police officer.┬á(12 minutes)",
+        song: ""
+      },
+      {
+        title: "Slow Boat to China",
+        producers: "Diane Wu",
+        description: "Producer Diane Wu goes to a party. A Chinese flag party.",
+        song: ""
+      },
+      {
+        title: "Two Weeks Later",
+        producers: "Diane Wu",
+        description:
+          "Katherine catches up with producer Diane Wu and things are different. (7 minutes)",
+        song: "“Umbrella” by Ember Island"
+      }
+    ]
+  },
+  {
     number: "685",
     title: "We Come From Small Places",
     description:
@@ -23847,7 +23906,6 @@ let allEpisodeData = [
   }
 ];
 
-
 module.exports = {
   allEpisodeData: allEpisodeData
-}
+};
