@@ -1,5 +1,44 @@
 let allEpisodeData = [
   {
+    number: "687",
+    title: "Small Things Considered",
+    description:
+      "Stories about being little. Secret writings in tiny letters. The power of a very small number. And a medication that's supposed to cure shortness. ",
+    date: "November 8, 2019",
+    image:
+      "https://hw2.thisamericanlife.org/sites/default/files/styles/uncropped/public/episodes/images/microscript_0.jpg?itok=dYgTjwHo",
+    acts: [
+      {
+        title: "Prologue",
+        producers: "",
+        description:
+          "Host Ira Glass talks about our fascination with small things. (7 minutes)",
+        song: ""
+      },
+      {
+        title: "Coming Up Short",
+        producers: "",
+        description:
+          "An endocrinologist wrote the show about a wave of parents coming to her to treat their short (but otherwise healthy) children with human growth hormone. Contributor Scott Brown investigates. (24 minutes)",
+        song: "“Small Things” by Erik Friedlander"
+      },
+      {
+        title: "Let’s Give ‘Em Nothing to Talk About",
+        producers: "",
+        description:
+          "David Kestenbaum talks about his love of the number zero and its power to destroy. Among zero's victims: one of the most controversial laws in recent memory. (11 minutes)",
+        song: ""
+      },
+      {
+        title: "What the Eye Can’t See",
+        producers: "",
+        description:
+          "Lilly Sullivan tells the story of the writer Robert Walser, who moved into a mental hospital and then seemed to disappear from the world. Until people looked more closely. To read more about Robert Walser, including some of the writings talked about in this story, read Microscripts, a book translated by Susan Bernfosky.(14 minutes)",
+        song: "“All The Small Things” by Scott Bradlee's Postmodern Juke Box"
+      }
+    ]
+  },
+  {
     number: "686",
     title: "Umbrellas Up",
     description:
