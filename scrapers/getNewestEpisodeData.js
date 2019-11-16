@@ -1,9 +1,9 @@
 const $ = require('cheerio')
-// const url = 'https://www.thisamericanlife.org/archive';
+const url = 'https://www.thisamericanlife.org/archive';
 const puppeteer = require('puppeteer')
 const allEpisodeData = require('./../allEpisodeData')
 const allEpisodeInfoArray = allEpisodeData.allEpisodeData
-const url = 'https://www.thisamericanlife.org/'
+// const url = 'https://www.thisamericanlife.org/'
 
 
 
@@ -41,7 +41,7 @@ async function clickNewestEpisode(page) {
     console.log('function ran')
     await page.goto(url);
 
-    await page.click('#block-system-main > div > article > article > div > header > h2 > a')
+    await page.click('#block-system-main > div > div:nth-child(3) > article.node.node-episode.node-teaser.view-teaser.clearfix.episode-number-687.with-image.links-processed > header > div > h2 > a')
 
     //this will go to homepage and click on first episode
 
@@ -72,7 +72,9 @@ function gatherEpisodeData (HTML) {
     // console.log('this is the episode object', episodeObject)
     console.log('XXXXXXXXXXXXXXX')
     allEpisodeInfoArray.unshift(episodeObject)
-    console.log('this is the first item in the all episode info', allEpisodeData.allEpisodeData[0])
+    console.dir(allEpisodeData.allEpisodeData[0], {depth: null, maxArrayLength: null})
+    // console.log('this is the first item in the all episode info', allEpisodeData.allEpisodeData[0])
+    // console.log('this is the second item', allEpisodeData.allEpisodeData[1])
     // allEpisodeInfoArray.push(episodeObject)
 }
 
@@ -94,7 +96,7 @@ function findNumberOfActs (HTML) {
     for (let actToScrape = 0; actToScrape < actSectionLength; actToScrape++) {
     //variables 
     let actTitle = $(`#block-system-main > div > article > div > div.field.field-name-field-acts.field-type-entityreference.field-label-hidden > div > div:nth-child(${nodeCount}) > article > div > h2 > a`, HTML).text()
-    let actProducers = $(`#block-system-main > div > article > div > div.field.field-name-field-acts.field-type-entityreference.field-label-hidden > div > div:nth-child(${nodeCount}) > article > div > div.field.field-name-field-contributor.field-type-entityreference.field-label-above > div > div.field-item.even > a`, HTML).text()
+    let actProducers = findProducers(HTML, nodeCount)
     let actDescription = $(`#block-system-main > div > article > div > div.field.field-name-field-acts.field-type-entityreference.field-label-hidden > div > div:nth-child(${nodeCount}) > article > div > div.field.field-name-body.field-type-text-with-summary.field-label-hidden > div > div > p`, HTML).text()
     let actSong = $(`#block-system-main > div > article > div > div > div > div:nth-child(${nodeCount}) > article > div > div.field-collection-container.clearfix > div > div > div`, HTML).text()
     console.log('this is the act', actTitle)
@@ -111,6 +113,21 @@ function findNumberOfActs (HTML) {
     }
 
     return actsArray
+}
+
+function findProducers (HTML, nodeCount) {
+    let producerSectionLength = $('#block-system-main > div > article > div > div > div > div:nth-child(' + nodeCount + ') > article > div > div.field.field-name-field-contributor.field-type-entityreference.field-label-above > div', HTML).children().length
+    let producerNodeCount = 1
+    let producerArray = []
+
+    for (let producersToScrape = 0; producersToScrape < producerSectionLength; producersToScrape++) {
+        let currentProducer = $('#block-system-main > div > article > div > div > div > div:nth-child(' + nodeCount + ') > article > div > div.field.field-name-field-contributor.field-type-entityreference.field-label-above > div > div:nth-child(' + producerNodeCount + ')', HTML).text()
+
+        producerArray.push(currentProducer)
+        producerNodeCount++
+    }
+
+    return producerArray
 }
 
 

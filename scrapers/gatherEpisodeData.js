@@ -44,7 +44,7 @@ visitUrlsAndScrape()
 
 async function visitUrlLoop (page) {
 
-    for (let urlToScrape = 0; urlToScrape < filteredUrlArray.length; urlToScrape++) {
+    for (let urlToScrape = 0; urlToScrape < 3; urlToScrape++) {
         const episodeUrl = filteredUrlArray[urlToScrape];
         const pageLoadFull = page.waitForNavigation({ waitUntil: 'networkidle2' });
         await page.goto('https://www.thisamericanlife.org' + episodeUrl);
@@ -102,7 +102,7 @@ function findNumberOfActs (HTML) {
     for (let actToScrape = 0; actToScrape < actSectionLength; actToScrape++) {
     //variables 
     let actTitle = $(`#block-system-main > div > article > div > div.field.field-name-field-acts.field-type-entityreference.field-label-hidden > div > div:nth-child(${nodeCount}) > article > div > h2 > a`, HTML).text()
-    let actProducers = $(`#block-system-main > div > article > div > div.field.field-name-field-acts.field-type-entityreference.field-label-hidden > div > div:nth-child(${nodeCount}) > article > div > div.field.field-name-field-contributor.field-type-entityreference.field-label-above > div > div.field-item.even > a`, HTML).text()
+    let actProducers = findProducers(HTML, nodeCount)
     let actDescription = $(`#block-system-main > div > article > div > div.field.field-name-field-acts.field-type-entityreference.field-label-hidden > div > div:nth-child(${nodeCount}) > article > div > div.field.field-name-body.field-type-text-with-summary.field-label-hidden > div > div > p`, HTML).text()
     let actSong = $(`#block-system-main > div > article > div > div > div > div:nth-child(${nodeCount}) > article > div > div.field-collection-container.clearfix > div > div > div`, HTML).text()
     console.log('this is the act', actTitle)
@@ -121,6 +121,20 @@ function findNumberOfActs (HTML) {
     return actsArray
 }
 
+function findProducers (HTML, nodeCount) {
+    let producerSectionLength = $('#block-system-main > div > article > div > div > div > div:nth-child(' + nodeCount + ') > article > div > div.field.field-name-field-contributor.field-type-entityreference.field-label-above > div', HTML).children().length
+    let producerNodeCount = 1
+    let producerArray = []
+
+    for (let producersToScrape = 0; producersToScrape < producerSectionLength; producersToScrape++) {
+        let currentProducer = $('#block-system-main > div > article > div > div > div > div:nth-child(' + nodeCount + ') > article > div > div.field.field-name-field-contributor.field-type-entityreference.field-label-above > div > div:nth-child(' + producerNodeCount + ')', HTML).text()
+
+        producerArray.push(currentProducer)
+        producerNodeCount++
+    }
+
+    return producerArray
+}
 module.exports = {
 
     gatherEpisodeData: gatherEpisodeData,

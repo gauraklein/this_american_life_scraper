@@ -1,4 +1,8 @@
-let filteredUrlArray = [ '/685/we-come-from-small-places',
+let filteredUrlArray = [ 
+  '/688/the-out-crowd',
+  '/687/small-things-considered',
+  '/686/umbrellas-up',
+  '/685/we-come-from-small-places',
   '/684/burn-it-down',
   '/683/beer-summit',
   '/682/ten-sessions',
