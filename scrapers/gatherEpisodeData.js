@@ -50,7 +50,7 @@ async function visitUrlLoop (page) {
         await page.goto('https://www.thisamericanlife.org' + episodeUrl);
         await pageLoadFull;
         let pageHTML = await page.evaluate(() => document.body.innerHTML);
-        await console.log('visited this page', episodeUrl)
+        // await console.log('visited this page', episodeUrl)
         await gatherEpisodeData(pageHTML)
     }
 
@@ -105,7 +105,7 @@ function findNumberOfActs (HTML) {
     let actProducers = findProducers(HTML, nodeCount)
     let actDescription = $(`#block-system-main > div > article > div > div.field.field-name-field-acts.field-type-entityreference.field-label-hidden > div > div:nth-child(${nodeCount}) > article > div > div.field.field-name-body.field-type-text-with-summary.field-label-hidden > div > div > p`, HTML).text()
     let actSong = $(`#block-system-main > div > article > div > div > div > div:nth-child(${nodeCount}) > article > div > div.field-collection-container.clearfix > div > div > div`, HTML).text()
-    console.log('this is the act', actTitle)
+    // console.log('this is the act', actTitle)
 
         let actObject = {
             title: actTitle,
