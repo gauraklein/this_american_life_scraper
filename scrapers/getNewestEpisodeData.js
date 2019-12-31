@@ -12,7 +12,8 @@ async function getLatestEpisodeAndPushResults () {
     //browser launch
     const browser = await puppeteer.launch({
         
-        executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+        executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        headless: false
     });
 
     //new page var 
@@ -38,16 +39,18 @@ async function getLatestEpisodeAndPushResults () {
 // functions
 
 async function clickNewestEpisode(page) {
-    console.log('function ran')
+    console.log('click newest')
     await page.goto(url);
 
-    await page.click('#block-system-main > div > div:nth-child(3) > article.node.node-episode.node-teaser.view-teaser.clearfix.episode-number-687.with-image.links-processed > header > div > h2 > a')
+    await page.click('#block-system-main > div > div:nth-child(3) > article.node.node-episode.node-teaser.view-teaser.clearfix.episode-number-689.with-image.links-processed > header > div > h2 > a')
 
     //this will go to homepage and click on first episode
 
 }
 
 function gatherEpisodeData (HTML) {
+
+    console.log('gathering data')
 
     //html selectors
 
@@ -69,10 +72,12 @@ function gatherEpisodeData (HTML) {
         image: imageUrl,
         acts: actsArray
     }
+
+    console.log(episodeObject)
     // console.log('this is the episode object', episodeObject)
     console.log('XXXXXXXXXXXXXXX')
-    allEpisodeInfoArray.unshift(episodeObject)
-    console.dir(allEpisodeData.allEpisodeData[0], {depth: null, maxArrayLength: null})
+    // allEpisodeInfoArray.unshift(episodeObject)
+    // console.dir(allEpisodeData.allEpisodeData[0], {depth: null, maxArrayLength: null})
     // console.log('this is the first item in the all episode info', allEpisodeData.allEpisodeData[0])
     // console.log('this is the second item', allEpisodeData.allEpisodeData[1])
     // allEpisodeInfoArray.push(episodeObject)
